@@ -8,7 +8,7 @@ main = Blueprint('main',__name__)
 @main.route('/',methods=['GET','POST'])
 def index():
     form = UserForm()
-
+    user_list = User.query.all()
     if form.validate_on_submit():
         user = User(
             username = form.username.data,
@@ -20,4 +20,4 @@ def index():
 
         return redirect(url_for('main.index'))
 
-    return render_template('index.html',form=form)
+    return render_template('index.html',form=form,user_list=user_list)
