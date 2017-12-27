@@ -1,13 +1,10 @@
-from app import app,db
+from app import create_app,db
 from flask_script import Manager,Server
 from database import manager as database_manager
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
-from config import Config
 
 
 
-
+app = create_app()
 manager = Manager(app)
 manager.add_command('runserver',Server(host='127.0.0.1',port=8000,use_debugger=True))
 manager.add_command('database',database_manager)

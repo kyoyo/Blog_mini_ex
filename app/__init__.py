@@ -1,16 +1,30 @@
 from flask import Flask
+from flask_bootstrap import Bootstrap
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
-from .views import main
 
 
 
-app = Flask(__name__)
-app.config.from_object(Config())
+db = SQLAlchemy()
+bootstrap = Bootstrap()
 
-db = SQLAlchemy(app)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config())
 
-app.register_blueprint(main)
+    db.init_app(app)
+    bootstrap.init_app(app)
+
+    app.config['SECRET_KEY'] = 'devkey'
+
+    from .views import main
+    app.register_blueprint(main)
+
+    return app
+
+
+
+
 
 
 
